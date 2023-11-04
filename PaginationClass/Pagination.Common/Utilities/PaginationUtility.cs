@@ -23,8 +23,8 @@ namespace PaginationClass.Pagination.Common.Utilities
                 Data = pagedItems,
                 Pages = totalPagedCount,
                 CurrentPage = paginationParameters.Page,
-                TotalCount = totalItems,
-                TotalPagedCount = pagedItems.Count()
+                ItemsPerPage = pagedItems.Count(),
+                TotalCount = totalItems
             };
         }
     }
