@@ -20,20 +20,22 @@ namespace PaginationClass.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetItems([FromQuery] Pager paginationParameters)
+        public async Task<IActionResult> GetItems([FromQuery] int ItemsPerPage, [FromQuery] int Pages)
         {
             _seeder.Seed();
 
             var items = _context.Items.ToList();
             var paginatedItems = await PaginationUtility<Items>.GetPager(
                 items,
-                paginationParameters,
+                ItemsPerPage,
+                Pages,
                 item => item.Name,
                 item => item.Id
             );
 
             return Ok(paginatedItems);
         }
+
 
     }
 }
