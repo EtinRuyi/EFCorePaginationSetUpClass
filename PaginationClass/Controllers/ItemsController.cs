@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PaginationClass.Data; // Add using statement for your database context
+using PaginationClass.Data;
 using PaginationClass.Model;
 using PaginationClass.Pagination.Common.Utilities;
 
@@ -20,15 +20,15 @@ namespace PaginationClass.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetItems([FromQuery] int ItemsPerPage, [FromQuery] int Pages)
+        public async Task<IActionResult> GetItems([FromQuery] int PerPage, [FromQuery] int Page)
         {
             _seeder.Seed();
 
             var items = _context.Items.ToList();
             var paginatedItems = await PaginationUtility<Items>.GetPager(
                 items,
-                ItemsPerPage,
-                Pages,
+                PerPage,
+                Page,
                 item => item.Name,
                 item => item.Id
             );

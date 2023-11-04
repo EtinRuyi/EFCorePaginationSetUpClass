@@ -1,105 +1,31 @@
-﻿////using PaginationClass.Model;
-////using System;
-////using System.Collections.Generic;
-////using System.Linq;
-////using System.Threading.Tasks;
-
-////namespace PaginationClass.Pagination.Common.Utilities
-////{
-////    public static class PaginationUtility<T>
-////    {
-////        public static async Task<PagerResponse<IEnumerable<T>>> GetPager(IEnumerable<T> items, Pager paginationParameters)
-////        {
-////            paginationParameters.PageSize = paginationParameters.PageSize <= 0 ? 10 : paginationParameters.PageSize;
-////            paginationParameters.Page = paginationParameters.Page <= 0 ? 1 : paginationParameters.Page;
-
-////            int totalItems = items.Count();
-////            int totalPagedCount = (int)Math.Ceiling((double)totalItems / paginationParameters.PageSize);
-
-////            var pagedItems = items.Skip((paginationParameters.Page - 1) * paginationParameters.PageSize).Take(paginationParameters.PageSize);
-
-////            return new PagerResponse<IEnumerable<T>>
-////            {
-////                Data = pagedItems,
-////                Pages = totalPagedCount,
-////                CurrentPage = paginationParameters.Page,
-////                ItemsPerPage = pagedItems.Count(),
-////                TotalCount = totalItems
-////            };
-////        }
-////    }
-////}
-
-
-
-//using PaginationClass.Model;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Threading.Tasks;
-
-//namespace PaginationClass.Pagination.Common.Utilities
-//{
-//    public static class PaginationUtility<T>
-//    {
-//        public static async Task<PagerResponse<IEnumerable<T>>> GetPager(IEnumerable<T> items, Pager paginationParameters, Func<T, string> nameSelector, Func<T, string> idSelector)
-//        {
-//            paginationParameters.PageSize = paginationParameters.PageSize <= 0 ? 10 : paginationParameters.PageSize;
-//            paginationParameters.Page = paginationParameters.Page <= 0 ? 1 : paginationParameters.Page;
-
-//            items = items.OrderBy(item => nameSelector(item)).ThenBy(item => idSelector(item));
-//            int totalItems = items.Count();
-//            int totalPagedCount = (int)Math.Ceiling((double)totalItems / paginationParameters.PageSize);
-
-//            var pagedItems = items.Skip((paginationParameters.Page - 1) * paginationParameters.PageSize).Take(paginationParameters.PageSize);
-
-//            return new PagerResponse<IEnumerable<T>>
-//            {
-//                Data = pagedItems,
-//                Pages = totalPagedCount,
-//                CurrentPage = paginationParameters.Page,
-//                ItemsPerPage = pagedItems.Count(),
-//                TotalCount = totalItems
-//            };
-//        }
-//    }
-//}
-
-
-
-using PaginationClass.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PaginationClass.Model;
 
 namespace PaginationClass.Pagination.Common.Utilities
 {
     public static class PaginationUtility<T>
     {
         public static async Task<PagerResponse<IEnumerable<T>>> GetPager(
-            IEnumerable<T> items,
-            int ItemsPerPage,
+            IEnumerable<T> data,
+            int PerPage,
             int Pages,
             Func<T, string> nameSelector,
             Func<T, string> idSelector)
         {
-            ItemsPerPage = ItemsPerPage <= 0 ? 10 : ItemsPerPage;
+            PerPage = PerPage <= 0 ? 10 : PerPage;
             Pages = Pages <= 0 ? 1 : Pages;
 
-            items = items.OrderBy(item => nameSelector(item)).ThenBy(item => idSelector(item));
-            int totalItems = items.Count();
-            int totalPagedCount = (int)Math.Ceiling((double)totalItems / ItemsPerPage);
-
-            var pagedItems = items.Skip((Pages - 1) * ItemsPerPage).Take(ItemsPerPage);
+            data = data.OrderBy(item => nameSelector(item)).ThenBy(item => idSelector(item));
+            int totalData = data.Count();
+            int totalPagedCount = (int)Math.Ceiling((double)totalData / PerPage);
+            var pagedData = data.Skip((Pages - 1) * PerPage).Take(PerPage);
 
             return new PagerResponse<IEnumerable<T>>
             {
-                Data = pagedItems,
-                Pages = totalPagedCount,
+                Data = pagedData,
+                TotalPageCount = totalPagedCount,
                 CurrentPage = Pages,
-                ItemsPerPage = pagedItems.Count(),
-                TotalCount = totalItems
+                PerPage = pagedData.Count(),
+                TotalCount = totalData
             };
         }
     }
