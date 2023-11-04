@@ -49,7 +49,6 @@ namespace PaginationClass.Pagination.Common.Utilities
 
             // Apply sorting
             items = items.OrderBy(item => nameSelector(item)).ThenBy(item => idSelector(item));
-
             int totalItems = items.Count();
             int totalPagedCount = (int)Math.Ceiling((double)totalItems / paginationParameters.PageSize);
 

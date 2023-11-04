@@ -25,9 +25,15 @@ namespace PaginationClass.Controllers
             _seeder.Seed();
 
             var items = _context.Items.ToList();
-            var paginatedItems = await  PaginationUtility<Items>.GetPager(items, paginationParameters);
+            var paginatedItems = await PaginationUtility<Items>.GetPager(
+                items,
+                paginationParameters,
+                item => item.Name,
+                item => item.Id
+            );
 
             return Ok(paginatedItems);
         }
+
     }
 }
