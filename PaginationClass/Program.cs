@@ -13,7 +13,6 @@ builder.Services.AddDbContext<PaginationDbContext>(Options => Options.UseSqlServ
                .GetConnectionString("Connection")));
 
 
-builder.Services.AddScoped<IPaginationService<Items>, PaginationService<Items>>();
 builder.Services.AddScoped<DatabaseSeeder>();
 
 builder.Services.AddControllers();

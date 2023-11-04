@@ -9,15 +9,5 @@ namespace PaginationClass.Data
         {
         }
         public DbSet<Items> Items { get; set; }
-
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.Entity<Items>(entity =>
-        //    {
-        //        entity.HasKey(e => e.Id);
-        //        entity.Property(e => e.Name).IsRequired();
-        //    });
-        //    base.OnModelCreating(modelBuilder);
-        //}
     }
 }

@@ -11,23 +11,21 @@ namespace PaginationClass.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly PaginationDbContext _context;
-        private readonly IPaginationService<Items> _paginationService;
         private readonly DatabaseSeeder _seeder;
 
-        public ItemsController(PaginationDbContext context, IPaginationService<Items> paginationService, DatabaseSeeder seeder)
+        public ItemsController(PaginationDbContext context, DatabaseSeeder seeder)
         {
             _context = context;
-            _paginationService = paginationService;
             _seeder = seeder;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetItems([FromQuery] Pager paginationParameters)
         {
-            _seeder.Seed(); // Seed the database with dummy data
+            _seeder.Seed();
 
             var items = _context.Items.ToList();
-            var paginatedItems = await _paginationService.GetPager(items, paginationParameters);
+            var paginatedItems = await  PaginationUtility<Items>.GetPager(items, paginationParameters);
 
             return Ok(paginatedItems);
         }
